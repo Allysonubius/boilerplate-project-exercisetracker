@@ -49,5 +49,9 @@ app.post('/api/exercise/new-user', (req, res) => {
             "username": data.username,
             "_id": data.id
         })
-    })
+    });
+})
+
+app.post('/api/exercise', (req, res) => {
+
 })
