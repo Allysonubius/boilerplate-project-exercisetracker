@@ -10,6 +10,17 @@ const bodyParser = require('body-parser');
 // Definition Schema
 const { Schema } = mongoose;
 
+// Exercise personSchema
+const ExerciseSchema = new Schema({
+    userId: String,
+    description: String,
+    duration: Number,
+    date: Date
+})
+
+// MongoDV ExerciseSchema
+const Exercise = mongoose.model("Exercise", ExerciseSchema)
+
 app.use(cors())
 
 app.use(express.static('public'))
@@ -54,9 +65,8 @@ app.post('/api/exercise/new-user', (req, res) => {
 })
 
 app.post('/api/exercise/add', (req, res) => {
-    const Exercise = {
+    const {
         userId,
-        username,
         description,
         duration,
         date
@@ -66,7 +76,21 @@ app.post('/api/exercise/add', (req, res) => {
         if (!data) {
             res.send("Unknown userId")
         } else {
-            res.json(req.body)
+            const newExercise = Exercise({
+                userId,
+                description,
+                duration,
+                date
+            })
+            newExercise.save((err, data) => {
+                res.json({
+                    userId,
+                    username: data.username,
+                    description,
+                    duration,
+                    date
+                })
+            })
         }
     })
 })
