@@ -54,10 +54,19 @@ app.post('/api/exercise/new-user', (req, res) => {
 })
 
 app.post('/api/exercise/add', (req, res) => {
-    const newExercise = new Exercise({
-        userId: ""
-    })
-    res.json({
-        "request": req.body
+    const Exercise = {
+        userId,
+        username,
+        description,
+        duration,
+        date
+    } = req.body;
+
+    Person.findById(userId, (err, data) => {
+        if (!data) {
+            res.send("Unknown userId")
+        } else {
+            res.json(req.body)
+        }
     })
 })
